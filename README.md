@@ -6,8 +6,8 @@ Converts decomposed jamo to precomposed hangul in OCLC Connexion client
 ## Configuration
 
 The macro book contains 3 macros:
-- HangulJamo!ComposeHangulSingleField: Convert the field where the cursor is currently located
-- HangulJamo!ComposeHangulAllFields: Convert all fields in the currently open record
+- HangulJamo!ComposeHangulSingleField: Convert the field where the cursor is currently located.
+- HangulJamo!ComposeHangulAllFields: Convert all fields in the currently open record.
 
 The following can be done for either or both of these macros:
 
