@@ -1,13 +1,13 @@
-# OCLCJamoComposer
-Converts decomposed Jamo to precomposed Hangul in OCLC Connexion client
+# OCLC CJK Composer
+Converts decomposed Korean Hangul and Japanese Kana to their composed forms in OCLC Connexion client
 
 [Download here](https://github.com/pulibrary/OCLCJamoComposer/releases/latest/download/InstallOCLCJamoComposer.exe)
 
 ## Configuration
 
 The macro book contains 3 macros:
-- HangulJamo!ComposeHangulSingleField: Convert the field where the cursor is currently located.
-- HangulJamo!ComposeHangulAllFields: Convert all fields in the currently open record.
+- CJKComposer!ComposeSingleField: Convert the field where the cursor is currently located.
+- CJKComposer!ComposeAllFields: Convert all fields in the currently open record.
 
 The following can be done for either or both of these macros:
 
