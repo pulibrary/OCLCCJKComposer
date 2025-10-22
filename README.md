@@ -1,7 +1,7 @@
 # OCLC CJK Composer
 Converts decomposed Korean Hangul and Japanese Kana to their composed forms in OCLC Connexion client
 
-[Download here](https://github.com/pulibrary/OCLCJamoComposer/releases/latest/download/InstallOCLCJamoComposer.exe)
+[Download here](https://github.com/pulibrary/OCLCJamoComposer/releases/latest/download/InstallOCLCCJKComposer.exe)
 
 ## Configuration
 
