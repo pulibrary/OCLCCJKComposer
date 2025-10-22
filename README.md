@@ -3,6 +3,8 @@ Converts decomposed Korean Hangul and Japanese Kana to their precomposed forms i
 
 [Download here](https://github.com/pulibrary/OCLCJamoComposer/releases/latest/download/InstallOCLCCJKComposer.exe)
 
+(Note: Depending on your computer's security settings, trying to run the installer may pop up a warning that "Windows protected Your PC". If you receive this warning, you can proceed with the installation by clicking "More info" and then "Run anyway".)
+
 ## Configuration
 
 The macro book contains 3 macros:
