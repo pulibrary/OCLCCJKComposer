@@ -1,0 +1,111 @@
+'MacroName:ComposeSingleField
+'MacroDescription:Compose hangul from individual jamo in a single field
+'Macro written by: Thomas Ventimiglia, Princeton University East Asian Library 
+'Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+'You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+'Macro Created: 20 October 2025
+'Macro last modified: 21 October 2025
+'Macro version: 0.2.0
+
+Declare Function GenerateHangulHTML(iHangulCode As Long) As String
+
+Sub Main
+   
+   Dim CS As Object
+On Error Resume Next
+   Set CS = GetObject(,"Connex.Client")
+On Error GoTo 0
+   If CS Is Nothing Then
+      Set CS = CreateObject("Connex.Client")
+   End If
+   
+   bool = CS.GetFieldLineUnicode(CS.CursorRow, sField)
+   If bool = FALSE Then
+      MsgBox "Not viewing a MARC record. Exiting..."
+      Exit Sub
+   End If
+
+
+   'Make sure field contains decomposed Korean Jamo or Japanese Kana
+   If InStr(1, sField, "&#x11") = 0 And InStr(1, sField, "&#x3099") = 0 And InStr(1, sField, "&#x309A") = 0 Then
+      MsgBox "Field contains no decomposed Korean or Japanese. Exiting..."
+      Exit Sub
+   End If
+ 
+   sNewField = ""
+   
+   iLen = Len(sField)
+   
+   iHangulStage = 0
+   iHangulCode = 0
+   
+   bPrevKana = False
+   
+   For i = 1 To iLen
+      If (Mid(sField,i,7) = "&#x3099" Or Mid(sField,i,7) = "&#x309A") And bPrevKana Then
+         sPrevChar = Mid(sNewField,Len(sNewField)-7,8)
+         iPrevCodePoint = Val("&H" & Mid(sPrevChar,4,4) & "&")
+         If Mid(sField,i,7) = "&#x3099" Then           
+            If iPrevCodePoint = &H3046& Then
+               iPrevCodePoint = &H3094&
+            Else
+               iPrevCodePoint = iPrevCodePoint + 1
+            End If
+         Else
+            iPrevCodePoint = iPrevCodePoint + 2
+         End If
+         sNewPrevChar = "&#x" & Hex(iPrevCodePoint) & ";"
+         sNewField = Left(sNewField,Len(sNewField)-8) & sNewPrevChar
+         bPrevKana = False
+         i = i + 7
+      ElseIf Mid(sField,i,5) = "&#x11" Then
+         sCodepoint = Mid(sField,i+3,4)
+         iCode = Val("&H" & sCodepoint & "&")  
+         If (iHangulStage = 0) Or (iHangulStage > 1 And iCode - 4519 < 0) Then
+            If iHangulCode > 0 Then
+               sNewField = sNewField & GenerateHangulHTML(iHangulCode)
+               iHangulCode = 0
+            End If
+            iCode = (iCode - 4352)*588
+            iHangulCode = iHangulCode + iCode
+            iHangulStage = 1
+          ElseIf iHangulStage = 1 Then
+            iCode = (iCode - 4449)*28
+            iHangulCode = iHangulCode + iCode
+            iHangulStage = 2
+         Else
+            iCode = iCode - 4519
+            iHangulCode = iHangulCode + iCode
+            iHangulStage = 0
+         End If
+         i = i + 7
+         If i = iLen Then
+            sNewField = sNewField & GenerateHangulHTML(iHangulCode)
+         End If
+      Else
+         If iHangulCode > 0 Then
+            sNewField = sNewField & GenerateHangulHTML(iHangulCode)
+            iHangulCode = 0
+         End If
+         sNewField = sNewField & Mid(sField,i,1) 
+      End If
+
+      If Len(sNewField) >= 8 Then
+         If Mid(sNewField,Len(sNewField)-7,5) = "&#x30" Then
+            bPrevKana = True
+         Else
+            bPrevKana = False
+         End If
+      End If
+
+   Next i
+     
+   CS.SetFieldLine CS.CursorRow, sNewField   
+    
+End Sub
+
+Function GenerateHangulHTML(iHangulCode As Long) As String
+   iHangulCode = iHangulCode + 44032
+   GenerateHangulHTML = "&#x" & Hex(iHangulCode) & ";"
+End Function
+   
