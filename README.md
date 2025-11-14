@@ -7,7 +7,7 @@ Converts decomposed Korean Hangul and Japanese Kana to their precomposed forms i
 
 ## Configuration
 
-The macro book contains 3 macros:
+The macro book contains 2 macros:
 - CJKComposer!ComposeSingleField: Convert the field where the cursor is currently located.
 - CJKComposer!ComposeAllFields: Convert all fields in the currently open record.
 
