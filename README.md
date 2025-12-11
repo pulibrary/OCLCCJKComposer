@@ -1,9 +1,13 @@
 # OCLC CJK Composer
 Converts decomposed Korean Hangul and Japanese Kana to their precomposed forms in OCLC Connexion client
 
-[Download here](https://github.com/pulibrary/OCLCJamoComposer/releases/latest/download/InstallOCLCCJKComposer.exe)
+[Download installer](https://github.com/pulibrary/OCLCJamoComposer/releases/latest/download/InstallOCLCCJKComposer.exe)
 
 (Note: Depending on your computer's security settings, trying to run the installer may pop up a warning that "Windows protected Your PC". If you receive this warning, you can proceed with the installation by clicking "More info" and then "Run anyway".)
+
+Alternatively, you can download this MBK file to your macros directory (e.g. C:\Users\[your user id]\AppData\Roaming\OCLC\Connex\Macros\).
+
+[Download macro book](https://github.com/pulibrary/OCLCJamoComposer/releases/latest/download/CJKComposer.mbk)
 
 ## Configuration
 
